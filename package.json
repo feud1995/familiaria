@@ -1,0 +1,31 @@
+{
+  "name": "familiaria",
+  "version": "1.0.0",
+  "description": "Web app for running Familiada clone tv show for your frineds with support of Raspberry Pi",
+  "main": "index.js",
+  "dependencies": {
+    "socket.io": "^1.7.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivellios/familiaria.git"
+  },
+  "keywords": [
+    "raspberry",
+    "pi",
+    "python",
+    "entertainment",
+    "iot",
+    "game"
+  ],
+  "author": "Janusz Kamienski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ivellios/familiaria/issues"
+  },
+  "homepage": "https://github.com/ivellios/familiaria#readme"
+}
