@@ -15,6 +15,13 @@ var QUESTIONS = [
 ];
 
 var current_question = 0;
+var scores = {
+  "left": 0,
+  "right": 0,
+  'total': 0
+};
+var activeTeam = null;
+var errors = 0;
 
 $(document).ready(function(){
     /* Game logic functions */
@@ -68,13 +75,38 @@ $(document).ready(function(){
         $answer.find(".score").html(answer_data.score);
     };
 
+    function setDisplayScore(score, side = null){
+      if(!side){
+        $('.results .total').html("0");
+        return;
+      }
+      var $result = $('.results .' + side)
+      $result.html(score.toString());
+    }
+
+    function addScore(score, side = null){
+      if(!side){
+        scores.total += score;
+        setDisplayScore(scores.total);
+        return;
+      }
+      scores[side] += score;
+      setDisplayScore(scores[side], side);
+    }
+
+
+
 
     /* game setup */
+    setDisplayScore(scores.left, 'left');
+    setDisplayScore(scores.right, 'right');
+    setDisplayScore(scores.total);
 
-    var $questionList = $('.qustion-list');
+    var $questionList = $('.main');
+    // show first question
+    $('<h1/>', { "html": QUESTIONS[current_question].question }).appendTo($questionList);
 
-    $('#question').html(QUESTIONS[current_question].question);
-
+    // show answer list for question
     for(var i = 1; i <= QUESTIONS[current_question].answers.length; i++){
       $questionList.addAnswer(i);
     }
@@ -121,12 +153,12 @@ $(document).ready(function(){
         case 49: emit_key('1'); break;
         case 50: emit_key('2'); break;
         case 51: emit_key('3'); break;
-        case 81: $('.questions .left').addError(); break;
-        case 87: $('.questions .right').addError(); break;
-        case 65: $('.questions .left').addError(true); break;
-        case 83: $('.questions .right').addError(true); break;
-        case 90: $('.questions .left').html("");
-        case 88: $('.questions .right').html("");
+        case 65: $('.questions .left').addError(); break;
+        case 83: $('.questions .left').addError(true); break;
+        case 68: $('.questions .left').html(""); break;
+        case 76: $('.questions .right').addError(); break;
+        case 75: $('.questions .right').addError(true); break;
+        case 74: $('.questions .right').html(""); break;
       }
     });
 });
