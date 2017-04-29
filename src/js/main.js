@@ -11,8 +11,27 @@ var QUESTIONS = [
         "score": "44"
       }
     ]
+  },
+  {
+    "question": "Jezyk europejski",
+    "answers": [
+      {
+        "answer": "Angielski",
+        "score": "33"
+      },
+      {
+        "answer": "Niemiecki",
+        "score": "28"
+      },
+      {
+        "answer": "Francuzki",
+        "score": "12"
+      }
+    ]
   }
 ];
+
+var DISPLAY_QUESTION = true;
 
 var current_question = -1;
 var scores = {
@@ -64,8 +83,17 @@ $(document).ready(function(){
         if(big)
           $e.addClass('big');
         $e.appendTo(this);
+        errors++;
       }
     })(jQuery);
+
+    (function($){
+      $.fn.clearError = function(){
+        this.html("");
+        errors = 0
+      }
+    })(jQuery);
+
 
     function fillAnswer(number){
       try{
@@ -102,26 +130,21 @@ $(document).ready(function(){
     function displayNextQuestion(){
       current_question++;
       var $questionList = $('.main');
-      // show first question
-      $('<h1/>', { "html": QUESTIONS[current_question].question }).appendTo($questionList);
+      $questionList.html("");
+      try{
+        // show question if set
+        if(DISPLAY_QUESTION)
+          $('<h1/>', { "html": QUESTIONS[current_question].question }).appendTo($questionList);
 
-      // show answer list for question
-      for(var i = 1; i <= QUESTIONS[current_question].answers.length; i++){
-        $questionList.addAnswer(i);
+        // show answer list for question
+        for(var i = 1; i <= QUESTIONS[current_question].answers.length; i++){
+          $questionList.addAnswer(i);
+        }
+      }
+      catch(TypeError){
+        console.log("No more questions")
       }
     }
-
-
-    /* game setup */
-    setDisplayScore(scores.left, 'left');
-    setDisplayScore(scores.right, 'right');
-    setDisplayScore(scores.total);
-
-
-
-
-
-
 
     /* Network communication logic */
 
@@ -137,14 +160,28 @@ $(document).ready(function(){
 
     // waiting for button to be hit and showing result
     socket.on('button pressed', function(button) {
-        $('#log').append('<br>Button pressed: ' + button.data);
-        $q = $('.results .'+ button.data);
-        $q.addClass('called');
-        setTimeout(
-          function(){ $q.removeClass('called'); },
-          3000
-        );
+      $('#log').append('<br>Button pressed: ' + button.data);
+      $q = $('.results .'+ button.data);
+      $q.addClass('called');
+      setTimeout(
+        function(){ $q.removeClass('called'); },
+        3000
+      );
     });
+
+
+
+    /* game setup */
+    setDisplayScore(scores.left, 'left');
+    setDisplayScore(scores.right, 'right');
+    setDisplayScore(scores.total);
+
+    /* game run */
+
+    
+
+
+
 
     $(document).on("keyup", function(e) {
       if(e.which == 32 || e.which == 13){
@@ -160,10 +197,10 @@ $(document).ready(function(){
         case 54: fillAnswer('6'); break;
         case 65: $('.questions .left').addError(); break;
         case 83: $('.questions .left').addError(true); break;
-        case 68: $('.questions .left').html(""); break;
+        case 68: $('.questions .left').clearError(); break;
         case 76: $('.questions .right').addError(); break;
         case 75: $('.questions .right').addError(true); break;
-        case 74: $('.questions .right').html(""); break;
+        case 74: $('.questions .right').clearError(); break;
         case 32: displayNextQuestion();
       }
     });
