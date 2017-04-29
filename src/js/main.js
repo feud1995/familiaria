@@ -14,7 +14,7 @@ var QUESTIONS = [
   }
 ];
 
-var current_question = 0;
+var current_question = -1;
 var scores = {
   "left": 0,
   "right": 0,
@@ -67,12 +67,17 @@ $(document).ready(function(){
       }
     })(jQuery);
 
-    function fillAnswer(question, number){
+    function fillAnswer(number){
+      try{
         var $answer = $("#answer"+(number-1).toString());
-        var answer_data = QUESTIONS[question].answers[number-1]
+        var answer_data = QUESTIONS[current_question].answers[number-1]
         $answer.addClass('filled');
         $answer.find(".text").html(answer_data.answer);
         $answer.find(".score").html(answer_data.score);
+      }
+      catch(TypeError){
+        console.log('No such answer');
+      }
     };
 
     function setDisplayScore(score, side = null){
@@ -94,7 +99,17 @@ $(document).ready(function(){
       setDisplayScore(scores[side], side);
     }
 
+    function displayNextQuestion(){
+      current_question++;
+      var $questionList = $('.main');
+      // show first question
+      $('<h1/>', { "html": QUESTIONS[current_question].question }).appendTo($questionList);
 
+      // show answer list for question
+      for(var i = 1; i <= QUESTIONS[current_question].answers.length; i++){
+        $questionList.addAnswer(i);
+      }
+    }
 
 
     /* game setup */
@@ -102,14 +117,7 @@ $(document).ready(function(){
     setDisplayScore(scores.right, 'right');
     setDisplayScore(scores.total);
 
-    var $questionList = $('.main');
-    // show first question
-    $('<h1/>', { "html": QUESTIONS[current_question].question }).appendTo($questionList);
 
-    // show answer list for question
-    for(var i = 1; i <= QUESTIONS[current_question].answers.length; i++){
-      $questionList.addAnswer(i);
-    }
 
 
 
@@ -138,27 +146,25 @@ $(document).ready(function(){
         );
     });
 
-    // deprecated
-    function emit_key(key){
-      //socket.emit('key pressed', {data: key});
-      fillAnswer(current_question, key);
-    }
-
     $(document).on("keyup", function(e) {
-      if(e.which == 13){
+      if(e.which == 32 || e.which == 13){
         e.preventDefault();
       }
       console.log(e.which);
       switch(e.which){
-        case 49: emit_key('1'); break;
-        case 50: emit_key('2'); break;
-        case 51: emit_key('3'); break;
+        case 49: fillAnswer('1'); break;
+        case 50: fillAnswer('2'); break;
+        case 51: fillAnswer('3'); break;
+        case 52: fillAnswer('4'); break;
+        case 53: fillAnswer('5'); break;
+        case 54: fillAnswer('6'); break;
         case 65: $('.questions .left').addError(); break;
         case 83: $('.questions .left').addError(true); break;
         case 68: $('.questions .left').html(""); break;
         case 76: $('.questions .right').addError(); break;
         case 75: $('.questions .right').addError(true); break;
         case 74: $('.questions .right').html(""); break;
+        case 32: displayNextQuestion();
       }
     });
 });
