@@ -32,14 +32,21 @@ gulp.task('images', function(){
         .pipe(gulp.dest(dest + 'images'))
 });
 
-gulp.task('watch', ['scripts', 'style', 'images'], function() {
+gulp.task('fonts', function(){
+    return gulp.src(src + 'fonts/**/*')
+        .pipe(gulp.dest(dest + 'fonts'))
+});
+
+
+gulp.task('watch', ['scripts', 'style', 'images', 'fonts'], function() {
   // Watch .js files
  gulp.watch(src + 'js/*.js', ['scripts']);
   // Watch .less files
  gulp.watch([src + 'sass/**/*.sass', src + 'sass/**/*.scss'], ['style']);
   // Watch image files
  gulp.watch(src + 'images/**/*', ['images']);
+ gulp.watch(src + 'fonts/**/*', ['fonts']);
 });
 
 
-gulp.task('default', ['style', 'scripts', 'images', 'watch'])
+gulp.task('default', ['style', 'scripts', 'images', 'fonts', 'watch'])

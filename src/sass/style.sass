@@ -1,0 +1,80 @@
+@import "modules/normalize"
+
+@font-face
+	font-family: 'metro2'
+	src: url('../fonts/metro2.eot')
+	src: local('☺'), url('../fonts/metro2.woff') format('woff'), url('../fonts/metro2.ttf') format('truetype'), url('../fonts/metro2.svg') format('svg')
+	font-weight: normal
+	font-style: normal
+
+body
+  font-family: metro2
+  font-size: 36px
+
+main
+  padding: 0
+  margin: 0
+  width: 100%
+  height: 100vh
+  background: black
+  color: yellow
+  .results
+    height: calc(10vh - 20px)
+    width: 100%
+    padding-top: 20px
+    .left-team, .right-team
+      font-size: 5rem
+      float: left
+      width: 25%
+      text-align: center
+    .right-team
+      text-align: center
+    .total
+      font-size: 6rem
+      text-align: center
+      margin: auto
+      width: 50%
+      float: left
+  .questions
+    height: calc(90vh - 24px)
+    width: 100%
+    display: flex
+  .x
+    font-size: 14rem
+    display: block
+    margin-left: -5%
+    &.big
+      font-size: 30rem
+      margin-left: -15%
+
+  .left, .right
+    width: 25%
+    text-align: center
+    height: 100%
+  .main
+    width: 50%
+    margin-top: 70px
+    h1
+      font-size: 2rem
+      text-align: center
+    .answer
+      margin-bottom: 30px
+      width: 100%
+      height: 40px
+      &.filled div
+        border: none
+      div
+        float: left
+        height: 40px
+        text-transform: uppercase
+      .number
+        width: 10%
+      .text
+        width: 80%
+        border-bottom: 3px dashed yellow
+      .score
+        width: calc(10% - 25px)
+        margin-left: 25px
+        border-bottom: 3px dashed yellow
+#log
+  display: none
