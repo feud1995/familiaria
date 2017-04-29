@@ -1,5 +1,7 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, jsonify
 import socketio
+# uncomment to load questions from questions.py file
+# from questions import QUESTIONS
 
 sio = socketio.Server(logger=True)
 app = Flask(__name__)
@@ -11,6 +13,13 @@ app.config['DEBUG'] = True
 def index():
     """ Main familiaria website """
     return render_template('index.html')
+
+@app.route('/get_questions')
+def get_questions():
+    """ Returns questions json """
+    # one can also jsonify it from anywhere like database
+    # return jsonify(QUESTIONS)
+    return render_template('questions.json')
 
 @app.route('/button')
 def button_debug():

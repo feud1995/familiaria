@@ -1,36 +1,4 @@
-var QUESTIONS = [
-  {
-    "question": "Wiecej niz jedno zwierze?",
-    "answers": [
-      {
-        "answer": "Owca",
-        "score": "51"
-      },
-      {
-        "answer": "Lama",
-        "score": "44"
-      }
-    ]
-  },
-  {
-    "question": "Jezyk europejski",
-    "answers": [
-      {
-        "answer": "Angielski",
-        "score": "33"
-      },
-      {
-        "answer": "Niemiecki",
-        "score": "28"
-      },
-      {
-        "answer": "Francuzki",
-        "score": "12"
-      }
-    ]
-  }
-];
-
+var QUESTIONS = null;
 var DISPLAY_QUESTION = true;
 
 var current_question = -1;
@@ -171,13 +139,13 @@ $(document).ready(function(){
 
     var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
 
-    // setup connection
+    // setup connection with sockets
     socket.on('connect', function() {
       console.log('connected');
       socket.emit('get room');
     });
 
-    // waiting for button to be hit and showing result
+    // setting socket wait for button to be hit and showing result
     socket.on('button pressed', function(button) {
       $('#log').append('<br>Button pressed: ' + button.data);
       $q = $('.results .'+ button.data);
@@ -188,19 +156,20 @@ $(document).ready(function(){
       );
     });
 
-
-
     /* game setup */
-    setDisplayScore(scores.left, 'left');
-    setDisplayScore(scores.right, 'right');
-    setDisplayScore(scores.total);
+      // Get JSON data with questions
+      $.getJSON("http://localhost:5000/get_questions", function(data){
+        QUESTIONS = data;
+        if(!QUESTIONS)
+          alert("No questions in the base!");
+      });
 
-    /* game run */
+      // set scores to starting positions
+      setDisplayScore(scores.left, 'left');
+      setDisplayScore(scores.right, 'right');
+      setDisplayScore(scores.total);
 
-
-
-
-
+    /* game starts now and we wait for the moderator keys */
 
     $(document).on("keyup", function(e) {
       if(e.which == 32 || e.which == 13){
@@ -208,21 +177,21 @@ $(document).ready(function(){
       }
       console.log(e.which);
       switch(e.which){
-        case 49: fillAnswer('1'); break;
-        case 50: fillAnswer('2'); break;
-        case 51: fillAnswer('3'); break;
-        case 52: fillAnswer('4'); break;
-        case 53: fillAnswer('5'); break;
-        case 54: fillAnswer('6'); break;
-        case 65: $('.questions .left').addError(); break;
-        case 83: $('.questions .left').addError(true); break;
-        case 68: $('.questions .left').clearError(); break;
-        case 76: $('.questions .right').addError(); break;
-        case 75: $('.questions .right').addError(true); break;
-        case 74: $('.questions .right').clearError(); break;
-        case 32: displayNextQuestion(); break;
-        case 37: addTeamScore('left'); break;
-        case 39: addTeamScore('right'); break;
+        case 49: fillAnswer('1'); break; // 1
+        case 50: fillAnswer('2'); break; // 2
+        case 51: fillAnswer('3'); break; // 3
+        case 52: fillAnswer('4'); break; // 4
+        case 53: fillAnswer('5'); break; // 5
+        case 54: fillAnswer('6'); break; // 6
+        case 65: $('.questions .left').addError(); break; // a
+        case 83: $('.questions .left').addError(true); break; // s
+        case 68: $('.questions .left').clearError(); break; // d
+        case 76: $('.questions .right').addError(); break; // l
+        case 75: $('.questions .right').addError(true); break; // k
+        case 74: $('.questions .right').clearError(); break; // j
+        case 32: displayNextQuestion(); break; // space
+        case 37: addTeamScore('left'); break; // left arrow
+        case 39: addTeamScore('right'); break; // right arrow
       }
     });
 });
