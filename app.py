@@ -23,12 +23,12 @@ def button_debug():
 def connect(sid, environ):
     sio.enter_room(sid, 'familiaria', namespace = '/input')
 
-@sio.on('key pressed', namespace='/test')
+@sio.on('key pressed', namespace='/input')
 def test_message(sid, message):
     sio.emit('my response', {'data': message['data']}, room=sid,
              namespace='/input')
 
-@sio.on('button pressed', namespace = '/rpi')
+@sio.on('button pressed', namespace = '/input')
 def button_pressed(sid, button):
     sio.emit('button pressed', {'data': button['data']}, namespace = '/input', room='familiaria')
 
