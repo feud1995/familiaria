@@ -95,22 +95,9 @@ $(document).ready(function(){
     })(jQuery);
 
 
-    function fillAnswer(number){
-      try{
-        var $answer = $("#answer"+(number-1).toString());
-        var answer_data = QUESTIONS[current_question].answers[number-1]
-        $answer.addClass('filled');
-        $answer.find(".text").html(answer_data.answer);
-        $answer.find(".score").html(answer_data.score);
-      }
-      catch(TypeError){
-        console.log('No such answer');
-      }
-    };
-
     function setDisplayScore(score, side = null){
       if(!side){
-        $('.results .total').html("0");
+        $('.results .total').html(score.toString());
         return;
       }
       var $result = $('.results .' + side)
@@ -119,13 +106,32 @@ $(document).ready(function(){
 
     function addScore(score, side = null){
       if(!side){
-        scores.total += score;
+        scores.total += parseInt(score);
+        console.log("INFO: New total: "+scores.total);
         setDisplayScore(scores.total);
         return;
       }
       scores[side] += score;
       setDisplayScore(scores[side], side);
     }
+
+    function fillAnswer(number){
+      try{
+        var $answer = $("#answer"+(number-1).toString());
+        var answer_data = QUESTIONS[current_question].answers[number-1]
+        $answer.addClass('filled');
+        $answer.find(".text").html(answer_data.answer);
+        $answer.find(".score").html(answer_data.score);
+        //add score to total
+        addScore(answer_data.score);
+        console.log('INFO: Adding score '+answer_data.score);
+      }
+      catch(TypeError){
+        console.log('No such answer');
+      }
+    };
+
+
 
     function displayNextQuestion(){
       current_question++;
@@ -178,7 +184,7 @@ $(document).ready(function(){
 
     /* game run */
 
-    
+
 
 
 
