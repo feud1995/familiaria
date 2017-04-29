@@ -41,6 +41,7 @@ var scores = {
 };
 var activeTeam = null;
 var errors = 0;
+var sumPoints = true;
 
 $(document).ready(function(){
     /* Game logic functions */
@@ -104,16 +105,25 @@ $(document).ready(function(){
       $result.html(score.toString());
     }
 
-    function addScore(score, side = null){
-      if(!side){
-        scores.total += parseInt(score);
-        console.log("INFO: New total: "+scores.total);
-        setDisplayScore(scores.total);
+    function addScoreTotal(score){
+      if(!sumPoints) // return if not suppose sum them
         return;
-      }
-      scores[side] += score;
-      setDisplayScore(scores[side], side);
+
+      scores.total += parseInt(score);
+      console.log("INFO: New total: "+scores.total);
+      setDisplayScore(scores.total);
+      return;
     }
+
+    function addTeamScore(side){
+      scores[side] += scores.total; // add new total
+      setDisplayScore(scores[side], side); // display new value
+      scores.total = 0; // set total to 0
+      setDisplayScore(0) // reset display of total
+      sumPoints = false;
+    }
+
+
 
     function fillAnswer(number){
       try{
@@ -122,9 +132,7 @@ $(document).ready(function(){
         $answer.addClass('filled');
         $answer.find(".text").html(answer_data.answer);
         $answer.find(".score").html(answer_data.score);
-        //add score to total
-        addScore(answer_data.score);
-        console.log('INFO: Adding score '+answer_data.score);
+        addScoreTotal(answer_data.score);
       }
       catch(TypeError){
         console.log('No such answer');
@@ -134,6 +142,11 @@ $(document).ready(function(){
 
 
     function displayNextQuestion(){
+      // reset total
+      scores.total = 0;
+      setDisplayScore(0);
+      sumPoints = true;
+
       current_question++;
       var $questionList = $('.main');
       $questionList.html("");
@@ -207,7 +220,9 @@ $(document).ready(function(){
         case 76: $('.questions .right').addError(); break;
         case 75: $('.questions .right').addError(true); break;
         case 74: $('.questions .right').clearError(); break;
-        case 32: displayNextQuestion();
+        case 32: displayNextQuestion(); break;
+        case 37: addTeamScore('left'); break;
+        case 39: addTeamScore('right'); break;
       }
     });
 });
