@@ -30,7 +30,8 @@ def test_message(sid, message):
 
 @sio.on('button pressed', namespace = '/input')
 def button_pressed(sid, button):
-    sio.emit('button pressed', {'data': button['data']}, namespace = '/input', room='familiaria')
+    BUTTON_MAP = {'1': 'left', '2': 'right'}
+    sio.emit('button pressed', {'data': BUTTON_MAP[button['data']]}, namespace = '/input', room='familiaria')
 
 
 if __name__ == '__main__':

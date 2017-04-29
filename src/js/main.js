@@ -8,6 +8,12 @@ $(document).ready(function(){
 
     socket.on('button pressed', function(button) {
         $('#log').append('<br>Button pressed: ' + button.data);
+        $q = $('.results .'+ button.data);
+        $q.addClass('called');
+        setTimeout(
+          function(){ $q.removeClass('called'); },
+          3000
+        );
     });
 
 
