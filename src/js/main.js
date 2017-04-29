@@ -44,7 +44,8 @@ $(document).ready(function(){
     })(jQuery);
 
     (function($){
-      $.fn.addError = function(big = false){
+      $.fn.addError = function(big){
+        big = typeof big  === 'undefined' ? false : big;
         $e = $('<div/>', {
           "class": "x",
           "html": "x"
@@ -59,12 +60,13 @@ $(document).ready(function(){
     (function($){
       $.fn.clearError = function(){
         this.html("");
-        errors = 0
+        errors = 0;
       }
     })(jQuery);
 
 
-    function setDisplayScore(score, side = null){
+    function setDisplayScore(score, side){
+      side = typeof side === 'undefined' ? null : side;
       if(!side){
         $('.results .total').html(score.toString());
         return;
