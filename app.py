@@ -5,6 +5,7 @@ sio = socketio.Server(logger=True)
 app = Flask(__name__)
 app.wsgi_app = socketio.Middleware(sio, app.wsgi_app)
 app.config['SECRET_KEY'] = 'secret!'
+app.config['DEBUG'] = True
 
 @app.route('/')
 def index():
