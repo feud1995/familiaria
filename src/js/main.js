@@ -1,5 +1,6 @@
 var QUESTIONS = null;
 var DISPLAY_QUESTION = true;
+var MEDIA = false;
 
 var current_question = -1;
 var scores = {
@@ -11,7 +12,25 @@ var activeTeam = null;
 var errors = 0;
 var sumPoints = true;
 
+/* due to copyright you need to provide them yourself - sorry */
 $(document).ready(function(){
+    /* sounds */
+    if(MEDIA){
+      var acorrect = new Howl({ src: '/static/media/correct.mp3' });
+      var aerror = new Howl({ src: '/static/media/error.mp3' });
+      var around = new Howl({ src: '/static/media/round.mp3' });
+      var aending = new Howl({ src: '/static/media/ending.mp3' });
+      var apresent = new Howl({ src: '/static/media/present.mp3' });
+      var abutton = new Howl({ src: '/static/media/button.mp3' });
+      $('#intro').on('ended', function(e){
+        $(this).fadeOut();
+        apresent.play()
+      });
+    }
+    else{
+      $('#intro').hide();
+    }
+
     /* Game logic functions */
 
     (function( $ ){
@@ -45,6 +64,7 @@ $(document).ready(function(){
 
     (function($){
       $.fn.addError = function(big){
+        if(MEDIA) aerror.play()
         big = typeof big  === 'undefined' ? false : big;
         $e = $('<div/>', {
           "class": "x",
@@ -97,6 +117,7 @@ $(document).ready(function(){
 
     function fillAnswer(number){
       try{
+        if(MEDIA) acorrect.play();
         var $answer = $("#answer"+(number-1).toString());
         var answer_data = QUESTIONS[current_question].answers[number-1]
         $answer.addClass('filled');
@@ -129,9 +150,11 @@ $(document).ready(function(){
         for(var i = 1; i <= QUESTIONS[current_question].answers.length; i++){
           $questionList.addAnswer(i);
         }
+        if(MEDIA) around.play();
       }
       catch(TypeError){
-        console.log("No more questions")
+        console.log("No more questions");
+        if(MEDIA) aending.play();
       }
     }
 
@@ -150,6 +173,7 @@ $(document).ready(function(){
     // setting socket wait for button to be hit and showing result
     socket.on('button pressed', function(button) {
       $('#log').append('<br>Button pressed: ' + button.data);
+      if(MEDIA) abutton.play();
       $q = $('.results .'+ button.data);
       $q.addClass('called');
       setTimeout(

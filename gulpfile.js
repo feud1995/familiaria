@@ -11,7 +11,7 @@ var gulp = require('gulp');
 
 
 gulp.task('scripts', function() {
-    return gulp.src([src + 'js/*.js', ])
+    return gulp.src(['node_modules/howler/dist/howler.js', src + 'js/*.js', ])
       	.pipe(concat('main.js'))
         .pipe(rename({suffix: '.min', basename: 'familiaria'}))
         //.pipe(uglify())
