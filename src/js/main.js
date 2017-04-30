@@ -1,6 +1,6 @@
 var QUESTIONS = null;
 var DISPLAY_QUESTION = true;
-var MEDIA = false;
+var MEDIA = true;
 
 var current_question = -1;
 var scores = {
@@ -23,12 +23,13 @@ $(document).ready(function(){
       var apresent = new Howl({ src: '/static/media/present.mp3' });
       var abutton = new Howl({ src: '/static/media/button.mp3' });
       $('#intro').on('ended', function(e){
-        $(this).fadeOut();
+        $(this).fadeOut(function(){ $("main").fadeIn() });
         apresent.play()
       });
     }
     else{
       $('#intro').hide();
+      $("main").fadeIn();
     }
 
     /* Game logic functions */
@@ -218,6 +219,7 @@ $(document).ready(function(){
         case 32: displayNextQuestion(); break; // space
         case 37: addTeamScore('left'); break; // left arrow
         case 39: addTeamScore('right'); break; // right arrow
+        case 77: around.play(); break;
       }
     });
 });
