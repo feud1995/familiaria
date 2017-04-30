@@ -10,4 +10,5 @@ class RPiConfig():
     DIOD_TIMEOUT = 3
 
 PORT = 5000
-HOST = '0.0.0.0'
+SERVER_HOST = '0.0.0.0'
+CLIENT_HOST = 'localhost'

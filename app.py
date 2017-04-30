@@ -1,6 +1,6 @@
 from flask import Flask, render_template, url_for, jsonify
 import socketio
-from config import PORT, HOST
+from config import PORT, SERVER_HOST
 # uncomment to load questions from questions.py file
 # from questions import QUESTIONS
 
@@ -48,4 +48,4 @@ def button_pressed(sid, button):
 if __name__ == '__main__':
     import eventlet
     import eventlet.wsgi
-    eventlet.wsgi.server(eventlet.listen((HOST, PORT)), app)
+    eventlet.wsgi.server(eventlet.listen((SERVER_HOST, PORT)), app)
