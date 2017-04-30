@@ -1,9 +1,9 @@
 import RPi.GPIO as GPIO
 from time import sleep
 from socketIO_client import SocketIO, BaseNamespace
-from config import HOST, PORT, RPiConfig
+from config import CLIENT_HOST, PORT, RPiConfig
 
-sio = SocketIO(HOST, PORT)
+sio = SocketIO(CLIENT_HOST, PORT)
 ispace = sio.define(BaseNamespace, '/input')
 
 GPIO.setmode(GPIO.BOARD)
