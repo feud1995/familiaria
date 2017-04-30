@@ -1,13 +1,13 @@
 from flask import Flask, render_template, url_for, jsonify
 import socketio
+from config import PORT, HOST
 # uncomment to load questions from questions.py file
 # from questions import QUESTIONS
 
 sio = socketio.Server(logger=True)
 app = Flask(__name__)
 app.wsgi_app = socketio.Middleware(sio, app.wsgi_app)
-app.config['SECRET_KEY'] = 'secret!'
-app.config['DEBUG'] = True
+app.config.from_object('config.FlaskConfig')
 
 @app.route('/')
 def index():
@@ -48,4 +48,4 @@ def button_pressed(sid, button):
 if __name__ == '__main__':
     import eventlet
     import eventlet.wsgi
-    eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
+    eventlet.wsgi.server(eventlet.listen((HOST, PORT)), app)
