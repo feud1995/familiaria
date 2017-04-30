@@ -10,7 +10,7 @@ GPIO.setwarnings(False)
 
 try:
     GPIO.setup([11,12], GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
-    GPIO.setup([7,8], GPIO.OUT, initial = GPIO.LOW)
+    GPIO.setup([10,8], GPIO.OUT, initial = GPIO.LOW)
     while True:
         if GPIO.input(12):
             GPIO.output(8, GPIO.HIGH)
@@ -18,10 +18,10 @@ try:
             sleep(3)
             GPIO.output(8, GPIO.LOW)
         if GPIO.input(11):
-            GPIO.output(7, GPIO.HIGH)
-            ispace.emit('button pressed', {'data': '2')
+            GPIO.output(10, GPIO.HIGH)
+            ispace.emit('button pressed', {'data': '2'})
             sleep(3)
-            GPIO.output(7, GPIO.LOW)
+            GPIO.output(10, GPIO.LOW)
         sleep(0.1)
 finally:
     GPIO.cleanup()
