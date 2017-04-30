@@ -31,7 +31,8 @@ def button_debug():
 
 @sio.on('connect')
 def connect(sid, environ):
-    sio.enter_room(sid, 'familiaria', namespace = '/input')
+    #sio.enter_room(sid, 'familiaria', namespace = '/input')
+    pass
 
 @sio.on('key pressed', namespace='/input')
 def test_message(sid, message):
@@ -41,7 +42,7 @@ def test_message(sid, message):
 @sio.on('button pressed', namespace = '/input')
 def button_pressed(sid, button):
     BUTTON_MAP = {'1': 'left', '2': 'right'}
-    sio.emit('button pressed', {'data': BUTTON_MAP[button['data']]}, namespace = '/input', room='familiaria')
+    sio.emit('button pressed', {'data': BUTTON_MAP[button['data']]}, namespace = '/input', )#room='familiaria')
 
 
 if __name__ == '__main__':

@@ -36,7 +36,7 @@ $(document).ready(function(){
 
     (function( $ ){
       $.fn.addAnswer = function(number){
-        var $answer = $('<div/>', {
+        var $answer = $('<div/>', { 
           'class': "answer",
           'id': "answer"+(number-1).toString()
         });
