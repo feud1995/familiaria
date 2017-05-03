@@ -1,31 +1,14 @@
 QUESTIONS = [
   {
-    "question": "Cos o zwierzetach",
+    "question": "Question 1",
     "answers": [
       {
-        "answer": "Owca",
+        "answer": "Answer 1",
         "score": "51"
       },
       {
-        "answer": "Lama",
+        "answer": "Answer 2",
         "score": "44"
-      }
-    ]
-  },
-  {
-    "question": "Jezyk europejski",
-    "answers": [
-      {
-        "answer": "Angielski",
-        "score": "33"
-      },
-      {
-        "answer": "Niemiecki",
-        "score": "28"
-      },
-      {
-        "answer": "Francuzki",
-        "score": "12"
       }
     ]
   }

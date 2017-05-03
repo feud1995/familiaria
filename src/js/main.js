@@ -22,6 +22,7 @@ $(document).ready(function(){
       var aending = new Howl({ src: '/static/media/ending.mp3' });
       var apresent = new Howl({ src: '/static/media/present.mp3' });
       var abutton = new Howl({ src: '/static/media/button.mp3' });
+
       $('#intro').on('ended', function(e){
         $(this).fadeOut(function(){ $("main").fadeIn() });
         apresent.play()
@@ -36,7 +37,7 @@ $(document).ready(function(){
 
     (function( $ ){
       $.fn.addAnswer = function(number){
-        var $answer = $('<div/>', { 
+        var $answer = $('<div/>', {
           'class': "answer",
           'id': "answer"+(number-1).toString()
         });
@@ -220,6 +221,9 @@ $(document).ready(function(){
         case 37: addTeamScore('left'); break; // left arrow
         case 39: addTeamScore('right'); break; // right arrow
         case 77: around.play(); break;
+        case 78: around.stop(); break;
+        case 188: aending.play(); break;
+        case 190: aending.stop(); break;
       }
     });
 });
