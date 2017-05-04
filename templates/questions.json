@@ -1,29 +1,32 @@
 [
   {
-    "question": "Cos o zwierzetach",
+    "question": "Question 1",
     "answers": [
       {
-        "answer": "Owca",
+        "answer": "Answer 1",
         "score": "51"
       },
       {
-        "answer": "Lama",
+        "answer": "Answer 2",
         "score": "44"
       }
     ]
   },
   {
-    "question": "Jezyk europejski",
+    "question": "Question 2",
     "answers": [
       {
-        "answer": "Angielski",
+        "answer": "Answer 1",
         "score": "33"
       },
       {
-        "answer": "Niemiecki",
+        "answer": "Answer 2",
         "score": "28"
       },
       {
-        "answer": "Francuzki",
+        "answer": "Answer 3",
         "score": "12"
       }
+    ]
+  }
+]
