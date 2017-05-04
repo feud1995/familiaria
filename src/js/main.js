@@ -100,8 +100,16 @@ $(document).ready(function(){
     function addScoreTotal(score){
       if(!sumPoints) // return if not suppose sum them
         return;
-
-      scores.total += parseInt(score);
+      // include score multiplier if 4th or 5th (or even next) round
+      if(current_question == 3) // 4th
+        mul_score = parseInt(score)*2;
+      else if (current_question >= 4) { // 5th+
+        mul_score = parseInt(score)*3;
+      }
+      else {
+        mul_score = parseInt(score);
+      }
+      scores.total += mul_score;
       console.log("INFO: New total: "+scores.total);
       setDisplayScore(scores.total);
       return;
