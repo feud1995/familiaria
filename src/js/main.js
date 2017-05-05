@@ -24,8 +24,8 @@ $(document).ready(function(){
       var abutton = new Howl({ src: '/static/media/button.mp3' });
 
       $('#intro').on('ended', function(e){
-        $(this).fadeOut(function(){ $("main").fadeIn() });
-        apresent.play()
+        $(this).fadeOut(function(){ $("main").fadeIn(); });
+        apresent.play();
       });
     }
     else{
@@ -60,13 +60,13 @@ $(document).ready(function(){
         $score.appendTo($answer);
 
         $answer.appendTo(this);
-        return this
+        return this;
       };
     })(jQuery);
 
     (function($){
       $.fn.addError = function(big){
-        if(MEDIA) aerror.play()
+        if(MEDIA) aerror.play();
         big = typeof big  === 'undefined' ? false : big;
         $e = $('<div/>', {
           "class": "x",
@@ -76,14 +76,14 @@ $(document).ready(function(){
           $e.addClass('big');
         $e.appendTo(this);
         errors++;
-      }
+      };
     })(jQuery);
 
     (function($){
       $.fn.clearError = function(){
         this.html("");
         errors = 0;
-      }
+      };
     })(jQuery);
 
 
@@ -93,15 +93,23 @@ $(document).ready(function(){
         $('.results .total').html(score.toString());
         return;
       }
-      var $result = $('.results .' + side)
+      var $result = $('.results .' + side);
       $result.html(score.toString());
     }
 
     function addScoreTotal(score){
       if(!sumPoints) // return if not suppose sum them
         return;
-
-      scores.total += parseInt(score);
+      // include score multiplier if 4th or 5th (or even next) round
+      if(current_question == 3) // 4th
+        mul_score = parseInt(score)*2;
+      else if (current_question >= 4) { // 5th+
+        mul_score = parseInt(score)*3;
+      }
+      else {
+        mul_score = parseInt(score);
+      }
+      scores.total += mul_score;
       console.log("INFO: New total: "+scores.total);
       setDisplayScore(scores.total);
       return;
@@ -111,7 +119,7 @@ $(document).ready(function(){
       scores[side] += scores.total; // add new total
       setDisplayScore(scores[side], side); // display new value
       scores.total = 0; // set total to 0
-      setDisplayScore(0) // reset display of total
+      setDisplayScore(0); // reset display of total
       sumPoints = false;
     }
 
@@ -121,7 +129,7 @@ $(document).ready(function(){
       try{
         if(MEDIA) acorrect.play();
         var $answer = $("#answer"+(number-1).toString());
-        var answer_data = QUESTIONS[current_question].answers[number-1]
+        var answer_data = QUESTIONS[current_question].answers[number-1];
         $answer.addClass('filled');
         $answer.find(".text").html(answer_data.answer);
         $answer.find(".score").html(answer_data.score);
@@ -130,7 +138,7 @@ $(document).ready(function(){
       catch(TypeError){
         console.log('No such answer');
       }
-    };
+    }
 
 
 
