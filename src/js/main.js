@@ -173,23 +173,29 @@ $(document).ready(function(){
     namespace = '/input';
 
     var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
+    var CALLED = false;
 
     // setup connection with sockets
     socket.on('connect', function() {
       console.log('connected');
       socket.emit('get room');
     });
-
     // setting socket wait for button to be hit and showing result
     socket.on('button pressed', function(button) {
       $('#log').append('<br>Button pressed: ' + button.data);
-      if(MEDIA) abutton.play();
-      $q = $('.results .'+ button.data);
-      $q.addClass('called');
-      setTimeout(
-        function(){ $q.removeClass('called'); },
-        3000
-      );
+      if(!CALLED){
+        CALLED = true;
+        if(MEDIA) abutton.play();
+        $q = $('.results .'+ button.data);
+        $q.addClass('called');
+        setTimeout(
+          function(){
+            $q.removeClass('called');
+            CALLED = false;
+          },
+          3000
+        );
+      }
     });
 
     /* game setup */
