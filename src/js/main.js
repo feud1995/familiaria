@@ -1,5 +1,5 @@
 var QUESTIONS = null;
-var DISPLAY_QUESTION = true;
+var DISPLAY_QUESTION = false;
 var MEDIA = true;
 
 var current_question = -1;
@@ -211,6 +211,8 @@ $(document).ready(function(){
         case 52: fillAnswer('4'); break; // 4
         case 53: fillAnswer('5'); break; // 5
         case 54: fillAnswer('6'); break; // 6
+        case 55: fillAnswer('7'); break; // 7
+        case 56: fillAnswer('8'); break; // 8
         case 65: $('.questions .left').addError(); break; // a
         case 83: $('.questions .left').addError(true); break; // s
         case 68: $('.questions .left').clearError(); break; // d
@@ -224,6 +226,7 @@ $(document).ready(function(){
         case 78: around.stop(); break;
         case 188: aending.play(); break;
         case 190: aending.stop(); break;
+
       }
     });
 });
