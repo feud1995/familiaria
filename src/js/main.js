@@ -11,6 +11,7 @@ var scores = {
 var activeTeam = null;
 var errors = 0;
 var sumPoints = true;
+var called = false;
 
 /* due to copyright you need to provide them yourself - sorry */
 $(document).ready(function(){
@@ -173,7 +174,6 @@ $(document).ready(function(){
     namespace = '/input';
 
     var socket = io.connect('http://' + document.domain + ':' + location.port + namespace);
-    var CALLED = false;
 
     // setup connection with sockets
     socket.on('connect', function() {
@@ -183,15 +183,15 @@ $(document).ready(function(){
     // setting socket wait for button to be hit and showing result
     socket.on('button pressed', function(button) {
       $('#log').append('<br>Button pressed: ' + button.data);
-      if(!CALLED){
-        CALLED = true;
+      if(!called){
+        called = true;
         if(MEDIA) abutton.play();
         $q = $('.results .'+ button.data);
         $q.addClass('called');
         setTimeout(
           function(){
             $q.removeClass('called');
-            CALLED = false;
+            called = false;
           },
           3000
         );
