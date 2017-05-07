@@ -90,6 +90,8 @@ The game comes with two example json files with questions (`questions1.json` and
 
 Example answers are based on the poll I created while creating the project. The poll was filled by 143 people, mainly from [Secret Level Facebook Group](https://www.facebook.com/groups/secretlevel/). 
 
+All poll results are available publicly in (Google Docs File)[https://docs.google.com/spreadsheets/d/1Aku2qnPQ7yIKQ0Jx5MwTu3XCu1q75tKwcTsCcZdgMBw/edit#gid=1643324207]. They were filtered and processed to provide reasonable scores for the game. 
+
 More info comming soon...
 
 ## Running the game
