@@ -1,3 +1,5 @@
+[![Gitpod ready-to-code](https://img.shields.io/badge/Gitpod-ready--to--code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ivellios/familiaria)
+
 # Familiaria
 
 Web app project for running Familiada TV show game clone for your friends with simple Raspberry Pi buttons support.
